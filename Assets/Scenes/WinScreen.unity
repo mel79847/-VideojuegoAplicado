@@ -690,7 +690,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 217728568}
         m_TargetAssemblyTypeName: WinScreen, Assembly-CSharp
-        m_MethodName: Reiniciar
+        m_MethodName: GoToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,31 +1,97 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Enemigo : MonoBehaviour
 {
+    public float normalSpeed = 3.5f;
+    public float fastSpeed = 6f;
+    public int activationCollectibles = 1;
+    public int fastModeCollectibles = 3;
+    public float killDistance = 1.2f;
+    public AudioSource tensionAudio;
 
-    private NavMeshAgent navMeshAgent;
+    private NavMeshAgent agent;
     private Esfera player;
+    private Renderer[] renderers;
+    private Collider[] colliders;
+    private bool isActive = false;
 
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         player = FindAnyObjectByType<Esfera>();
+        renderers = GetComponentsInChildren<Renderer>();
+        colliders = GetComponentsInChildren<Collider>();
 
+        if (agent != null)
+            agent.speed = normalSpeed;
+
+        SetEnemyVisible(false);
+
+        if (tensionAudio != null)
+        {
+            tensionAudio.loop = true;
+            tensionAudio.playOnAwake = false;
+        }
     }
 
-    
     void Update()
     {
-        navMeshAgent.destination = player.transform.position;
+        if (player == null || GameManager.Instance == null || agent == null) return;
 
+        int collected = GameManager.Instance.CurrentCollectibles();
+
+        if (!isActive && collected >= activationCollectibles)
+        {
+            isActive = true;
+            SetEnemyVisible(true);
+        }
+
+        if (!isActive) return;
+
+        if (!agent.enabled)
+            agent.enabled = true;
+
+        agent.destination = player.transform.position;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+
+        if (distanceToPlayer <= killDistance)
+        {
+            if (tensionAudio != null)
+                tensionAudio.Stop();
+
+            SceneManager.LoadScene("GameOver");
+            return;
+        }
+
+        if (collected >= fastModeCollectibles)
+        {
+            agent.speed = fastSpeed;
+
+            if (tensionAudio != null && !tensionAudio.isPlaying)
+            {
+                tensionAudio.Play();
+            }
+        }
+        else
+        {
+            agent.speed = normalSpeed;
+
+            if (tensionAudio != null && tensionAudio.isPlaying)
+            {
+                tensionAudio.Stop();
+            }
+        }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void SetEnemyVisible(bool value)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            GameManager.Instance.ResetGame();
-        }
+        foreach (Renderer r in renderers)
+            r.enabled = value;
+
+        foreach (Collider c in colliders)
+            c.enabled = value;
     }
 }

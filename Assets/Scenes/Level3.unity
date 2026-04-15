@@ -447,6 +447,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3940688778220958410, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3940688778220958410, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4681109150088270851, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 216421305}
+    - target: {fileID: 4681109150088270851, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+      propertyPath: playerRenderer
+      value: 
+      objectReference: {fileID: 216421306}
+    - target: {fileID: 4681109150088270851, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+      propertyPath: collectibleClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e0ce5f850556cf41a87c560964cf849, type: 3}
     - target: {fileID: 8168344786779639643, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -456,6 +476,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+--- !u!54 &216421305 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3940688778220958410, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+  m_PrefabInstance: {fileID: 216421304}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &216421306 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8168344786779639643, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+  m_PrefabInstance: {fileID: 216421304}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &276605415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,6 +2001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   collectiblesText: {fileID: 284138944}
   collectiblesTextTotal: {fileID: 1115153422}
+  nextSceneName: WinScreen
 --- !u!4 &1562538169
 Transform:
   m_ObjectHideFlags: 0

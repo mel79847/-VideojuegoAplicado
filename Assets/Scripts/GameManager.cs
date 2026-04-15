@@ -6,39 +6,50 @@ public class GameManager : MonoBehaviour
 {
     public TMP_Text collectiblesText;
     public TMP_Text collectiblesTextTotal;
+    public string nextSceneName;
 
     private int collectiblesNumberTotal;
     private int collectiblesNumber;
 
-    public static GameManager Instance { get; set; }
+    public static GameManager Instance { get; private set; }
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
-       Instance = this;
-       collectiblesNumberTotal = transform.childCount;
-       collectiblesTextTotal.text = collectiblesNumberTotal.ToString();
-       //Debug.Log("Total collectibles: " + collectiblesNumberTotal);
-    }
+        GameSession.lastPlayedLevel = SceneManager.GetActiveScene().name;
 
+        collectiblesNumberTotal = transform.childCount;
+        collectiblesNumber = 0;
+
+        if (collectiblesTextTotal != null)
+            collectiblesTextTotal.text = collectiblesNumberTotal.ToString();
+
+        if (collectiblesText != null)
+            collectiblesText.text = collectiblesNumber.ToString();
+    }
 
     void Update()
     {
         if (transform.childCount <= 0)
         {
-            //Debug.Log("All collectibles collected, loading next level...");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(nextSceneName);
         }
-        
     }
+
     public void AddCollectibles()
     {
         collectiblesNumber++;
-        collectiblesText.text = collectiblesNumber.ToString();
-        
+
+        if (collectiblesText != null)
+            collectiblesText.text = collectiblesNumber.ToString();
     }
 
-    public void ResetGame()
+    public int CurrentCollectibles()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        return collectiblesNumber;
     }
 }

@@ -1554,6 +1554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   collectiblesText: {fileID: 284138944}
   collectiblesTextTotal: {fileID: 2048710981}
+  nextSceneName: Level2
 --- !u!4 &1562538169
 Transform:
   m_ObjectHideFlags: 0
@@ -1860,6 +1861,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4681109150088270851, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 4141185755737774120}
+    - target: {fileID: 4681109150088270851, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+      propertyPath: playerRenderer
+      value: 
+      objectReference: {fileID: 4141185755737774121}
+    - target: {fileID: 4681109150088270851, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+      propertyPath: collectibleClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e0ce5f850556cf41a87c560964cf849, type: 3}
     - target: {fileID: 8168344786779639643, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1869,6 +1882,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+--- !u!54 &4141185755737774120 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3940688778220958410, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+  m_PrefabInstance: {fileID: 4141185755737774119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4141185755737774121 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8168344786779639643, guid: aad35d2125b04224bbefffabb0edc460, type: 3}
+  m_PrefabInstance: {fileID: 4141185755737774119}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
