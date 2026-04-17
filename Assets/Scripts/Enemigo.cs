@@ -8,7 +8,8 @@ public class Enemigo : MonoBehaviour
     public float fastSpeed = 6f;
     public int activationCollectibles = 1;
     public int fastModeCollectibles = 3;
-    public float killDistance = 1.2f;
+    public float killDistance = 2.2f;
+    public float tensionDistance = 6f;
     public AudioSource tensionAudio;
 
     private NavMeshAgent agent;
@@ -33,6 +34,7 @@ public class Enemigo : MonoBehaviour
         {
             tensionAudio.loop = true;
             tensionAudio.playOnAwake = false;
+            tensionAudio.Stop();
         }
     }
 
@@ -48,7 +50,11 @@ public class Enemigo : MonoBehaviour
             SetEnemyVisible(true);
         }
 
-        if (!isActive) return;
+        if (!isActive)
+        {
+            StopTensionAudio();
+            return;
+        }
 
         if (!agent.enabled)
             agent.enabled = true;
@@ -59,31 +65,46 @@ public class Enemigo : MonoBehaviour
 
         if (distanceToPlayer <= killDistance)
         {
-            if (tensionAudio != null)
-                tensionAudio.Stop();
-
-            SceneManager.LoadScene("GameOver");
+            KillPlayer();
             return;
         }
 
         if (collected >= fastModeCollectibles)
-        {
             agent.speed = fastSpeed;
+        else
+            agent.speed = normalSpeed;
 
+        if (distanceToPlayer <= tensionDistance)
+        {
             if (tensionAudio != null && !tensionAudio.isPlaying)
-            {
                 tensionAudio.Play();
-            }
         }
         else
         {
-            agent.speed = normalSpeed;
-
-            if (tensionAudio != null && tensionAudio.isPlaying)
-            {
-                tensionAudio.Stop();
-            }
+            StopTensionAudio();
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isActive) return;
+
+        if (other.CompareTag("Player"))
+        {
+            KillPlayer();
+        }
+    }
+
+    private void KillPlayer()
+    {
+        StopTensionAudio();
+        SceneManager.LoadScene("GameOver");
+    }
+
+    private void StopTensionAudio()
+    {
+        if (tensionAudio != null && tensionAudio.isPlaying)
+            tensionAudio.Stop();
     }
 
     private void SetEnemyVisible(bool value)
